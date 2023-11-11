@@ -1,6 +1,4 @@
-
-import sys
-print(sys.path)
+from langchain.document_loaders import PyPDFLoader
 import re
 
 def read_pretest_pdf(input_file):
@@ -8,21 +6,13 @@ def read_pretest_pdf(input_file):
     pages = langchain_loader.load_and_split()
     text = pages[17].page_content
 
-
-    
-
     print(text)
     print('\n' * 3)
     print('-' * 20)
     extract_q_n_a(text)
 
-
-
-
-
-
 def extract_q_n_a(text):
-    pattern = re.compile(r'(\d+\.\w) (.+?)(?=(\d+\.\w|\Z))', re.DOTALL)
+    pattern = re.compile(r'(\d+\.[A-Z].*?)(?=\d+\.[A-Z]|$)', re.DOTALL)
 
     # Find all matches in the text
     matches = pattern.findall(text)
@@ -32,17 +22,13 @@ def extract_q_n_a(text):
 
     # Iterate through matches and populate the dictionary
     for match in matches:
-        question_number = match[0]
-        question_text = match[1].strip()
-        questions_dict[question_number] = {'question': question_text, 'answers': []}
-
-    # Use regex to extract answer choices for each question
-    for question_number, _, next_question_number in matches:
-        start_pos = text.find(question_number) + len(question_number) + 1
-        end_pos = text.find(next_question_number) if next_question_number else None
-        question_text = text[start_pos:end_pos].strip()
-        answers = re.findall(r'([a-e]\. .+?)(?=(\n[a-e]\.|$))', question_text)
-        questions_dict[question_number]['answers'] = [answer[0] for answer in answers]
+        match = match.strip()
+        question_match = re.match(r'(\d+\.[A-Z].*?)(?=\d+\.[A-Z]|$)', match, re.DOTALL)
+        if question_match:
+            question_text = question_match.group(1).strip()
+            answers = re.findall(r'[A-E]\. .*?(?=[A-E]\. |\Z)', match)
+            question_number = re.match(r'(\d+)\.', question_text).group(1)
+            questions_dict[question_number] = {'question': question_text, 'answers': [answer.strip() for answer in answers]}
 
     # Print the resulting dictionary
     for question_number, data in questions_dict.items():
@@ -51,11 +37,8 @@ def extract_q_n_a(text):
             print(f"  {answer}")
         print()
 
-
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: odnoneove")
-    
-    input_file = sys.argv[1]
+    # Set the path to your PDF file in Google Colab
+    pdf_path = "/content/input_file.pdf"
 
-    read_pretest_pdf(input_file)
+    read_pretest_pdf(pdf_path)
