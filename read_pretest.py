@@ -1,5 +1,6 @@
 from langchain.document_loaders import PyPDFLoader
 import re
+import sys
 
 def read_pretest_pdf(input_file):
     langchain_loader = PyPDFLoader(input_file)
@@ -28,6 +29,11 @@ def extract_q_n_a(text):
             question_text = question_match.group(1).strip()
             answers = re.findall(r'[A-E]\. .*?(?=[A-E]\. |\Z)', match)
             question_number = re.match(r'(\d+)\.', question_text).group(1)
+            #TODO: 1. strip number from beginning of question. 2. determine where to start reading from 3. determine topic (page numbers can be used)
+            #TODO: 2. determine where to start reading from 
+            #TODO: 3. determine topic (page numbers can be used)
+            #TODO: 4. create db to hold questions and answers
+            #TODO: 5. Map right answer to question and embed explanation
             questions_dict[question_number] = {'question': question_text, 'answers': [answer.strip() for answer in answers]}
 
     # Print the resulting dictionary
@@ -39,6 +45,6 @@ def extract_q_n_a(text):
 
 if __name__ == "__main__":
     # Set the path to your PDF file in Google Colab
-    pdf_path = "/content/input_file.pdf"
+    pdf_path = sys.argv[1]
 
     read_pretest_pdf(pdf_path)
