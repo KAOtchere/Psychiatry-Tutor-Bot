@@ -1,5 +1,6 @@
-from langchain.document_loaders import PyPDFLoader
+
 import sys
+print(sys.path)
 import re
 
 def read_pretest_pdf(input_file):
@@ -7,13 +8,13 @@ def read_pretest_pdf(input_file):
     pages = langchain_loader.load_and_split()
     text = pages[17].page_content
 
-    text_duplicate = ""
+
     
 
-    # print(text)
-    # print('\n' * 3)
-    # print('-' * 20)
-    # extract_q_n_a(text)
+    print(text)
+    print('\n' * 3)
+    print('-' * 20)
+    extract_q_n_a(text)
 
 
 
