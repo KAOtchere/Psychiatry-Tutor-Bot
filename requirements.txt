@@ -1,1 +1,6 @@
 langchain==0.0.334
+openai==1.2.3
+pinecone_client==2.2.4
+python-dotenv==1.0.0
+tiktoken==0.5.1
+tqdm==4.66.1
