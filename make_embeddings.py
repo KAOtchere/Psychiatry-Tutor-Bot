@@ -2,7 +2,6 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 import pinecone
 import os
 import sys
-import openai
 from openai import OpenAI
 from time import sleep
 from dotenv import load_dotenv
