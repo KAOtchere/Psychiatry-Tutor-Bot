@@ -5,12 +5,12 @@ import sys
 def read_pretest_pdf(input_file):
     langchain_loader = PyPDFLoader(input_file)
     pages = langchain_loader.load_and_split()
-    text = pages[17].page_content
-
+    text = pages[5].page_content
     print(text)
-    print('\n' * 3)
-    print('-' * 20)
-    extract_q_n_a(text)
+    # print(text)
+    # print('\n' * 3)
+    # print('-' * 20)
+    # extract_q_n_a(text)
 
 def extract_q_n_a(text):
     pattern = re.compile(r'(\d+\.[A-Z].*?)(?=\d+\.[A-Z]|$)', re.DOTALL)
