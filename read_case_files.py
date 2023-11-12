@@ -1,7 +1,7 @@
 from langchain.document_loaders import PyPDFLoader
 import re
 
-def read_pretest_pdf(input_file):
+def read_pdf(input_file):
     """
     This function reads a PDF file and returns a 'sanitised' version of its pages
     """
@@ -15,8 +15,7 @@ def normalise_whitespace(text):
     This function reads a string and replaces all extra whitespace with a single whitespace. 
     newline and tab characters are also replaced with a single whitespace
     """
-    #this replaces all extra whitespace, newline characters and tab characters with a single whitespace
-    cleaned_text = re.sub(r'\s+', ' ', text) # \s matches any whitespace character, + makes it match one or more
+    cleaned_text = re.sub(r'\s+', ' ', text) 
 
     return cleaned_text
 
