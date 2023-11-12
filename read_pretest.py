@@ -7,12 +7,12 @@
 
 from langchain.document_loaders import PyPDFLoader
 import re
+import sys
 
 def read_pretest_pdf(input_file):
     langchain_loader = PyPDFLoader(input_file)
     pages = langchain_loader.load_and_split()
     text = pages[5].page_content
-    print(text)
     # print(text)
     # print('\n' * 3)
     # print('-' * 20)
@@ -46,7 +46,7 @@ def extract_q_n_a(text):
 
 if __name__ == "__main__":
     # Set the path to your PDF file in Google Colab
-    pdf_path = "/content/input_file.pdf"
+    pdf_path = sys.argv[1]
 
     read_pretest_pdf(pdf_path)
 
